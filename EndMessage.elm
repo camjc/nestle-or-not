@@ -1,6 +1,7 @@
-module EndMessage (view) where
+module EndMessage exposing (view)
 
 import Html exposing (Html, h1, text)
+import QuizTypes
 
 
 endMessage : Int -> String
@@ -21,6 +22,6 @@ endMessage percentage =
     "Try again"
 
 
-view : Int -> Html
+view : Int -> Html QuizTypes.Msg
 view percentage =
   h1 [] [ text ((endMessage percentage) ++ ", you got") ]

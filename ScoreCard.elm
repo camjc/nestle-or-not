@@ -1,4 +1,4 @@
-module ScoreCard (view) where
+module ScoreCard exposing (view)
 
 import Helpers
 import IncorrectList
@@ -8,7 +8,7 @@ import Array
 import Html exposing (Html, div, h1, text)
 
 
-scoreComponent : QuizTypes.Model -> Html
+scoreComponent : QuizTypes.Model -> Html QuizTypes.Msg
 scoreComponent model =
   let
     correctAnswers =
@@ -24,7 +24,7 @@ scoreComponent model =
     h1 [] [ text (correctAnswers ++ " out of " ++ totalAnswers) ]
 
 
-view : QuizTypes.Model -> Html
+view : QuizTypes.Model -> Html QuizTypes.Msg
 view model =
   div
     []

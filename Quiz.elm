@@ -1,4 +1,4 @@
-module Quiz (update, view) where
+module Quiz exposing (update, view)
 
 import Button
 import Helpers
@@ -57,7 +57,7 @@ updateModelWithGuess guess model =
     }
 
 
-update : QuizTypes.Action -> QuizTypes.Model -> QuizTypes.Model
+update : QuizTypes.Msg -> QuizTypes.Model -> QuizTypes.Model
 update action model =
   case action of
     QuizTypes.Start ->
@@ -74,8 +74,8 @@ update action model =
 -- VIEW
 
 
-view : Signal.Address QuizTypes.Action -> QuizTypes.Model -> Html
-view address model =
+view : QuizTypes.Model -> Html QuizTypes.Msg
+view model =
   div
     [ style
         [ ( "margin", "5rem auto" )
@@ -84,7 +84,7 @@ view address model =
     ]
     (if model.questionId == -1 then
       [ model.instructionsComponent
-      , Button.view ( "Start", "green" ) address QuizTypes.Start
+      , Button.view ( "Start", "green" ) QuizTypes.Start
       ]
      else if (getCurrentQuestion model).label == "End" then
       [ EndMessage.view (Helpers.getPercentageCorrect model)
@@ -92,8 +92,8 @@ view address model =
       ]
      else
       [ Question.view (getCurrentQuestion model)
-      , Button.view model.buttonTrue address QuizTypes.GuessTrue
-      , Button.view model.buttonFalse address QuizTypes.GuessFalse
+      , Button.view model.buttonTrue QuizTypes.GuessTrue
+      , Button.view model.buttonFalse QuizTypes.GuessFalse
       , ScoreCard.view model
       ]
     )

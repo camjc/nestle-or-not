@@ -1,4 +1,4 @@
-module IncorrectList (view) where
+module IncorrectList exposing (view)
 
 import CommaList
 import QuizTypes
@@ -7,7 +7,7 @@ import Html exposing (Html, div, h2, text)
 import Html.Attributes exposing (style)
 
 
-view : QuizTypes.Model -> Html
+view : QuizTypes.Model -> Html QuizTypes.Msg
 view model =
   let
     shouldBeTrue =

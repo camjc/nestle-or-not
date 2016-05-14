@@ -1,4 +1,4 @@
-module Helpers (getGuessesCount, getPercentageCorrect) where
+module Helpers exposing (getGuessesCount, getPercentageCorrect)
 
 import Array
 import QuizTypes

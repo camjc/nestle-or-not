@@ -1,4 +1,4 @@
-module Button (view) where
+module Button exposing (view)
 
 import QuizTypes
 import Html exposing (Attribute, Html, button, text)
@@ -6,7 +6,7 @@ import Html.Attributes exposing (style)
 import Html.Events
 
 
-getStyle : String -> Attribute
+getStyle : String -> Attribute QuizTypes.Msg
 getStyle backgroundColor =
   style
     [ ( "border", "0" )
@@ -18,13 +18,13 @@ getStyle backgroundColor =
     ]
 
 
-view : QuizTypes.ButtonTuple -> Signal.Address QuizTypes.Action -> QuizTypes.Action -> Html
-view buttonTuple address action =
+view : QuizTypes.ButtonTuple -> QuizTypes.Msg -> Html QuizTypes.Msg
+view buttonTuple action =
   button
     [ buttonTuple
         |> snd
         |> getStyle
-    , Html.Events.onClick address action
+    , Html.Events.onClick action
     ]
     [ buttonTuple
         |> fst

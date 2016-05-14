@@ -1,4 +1,4 @@
-module QuizTypes (..) where
+module QuizTypes exposing (..)
 
 import Array
 import Html
@@ -27,11 +27,11 @@ type alias Model =
   , wrongAnswers : Answers
   , buttonTrue : ButtonTuple
   , buttonFalse : ButtonTuple
-  , instructionsComponent : Html.Html
+  , instructionsComponent : Html.Html Msg
   }
 
 
-type Action
+type Msg
   = Start
   | GuessTrue
   | GuessFalse

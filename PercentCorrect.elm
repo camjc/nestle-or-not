@@ -1,4 +1,4 @@
-module PercentCorrect (view) where
+module PercentCorrect exposing (view)
 
 import Helpers
 import QuizTypes
@@ -16,7 +16,7 @@ getPercentageCorrectString model =
     percentString ++ "% Correct"
 
 
-view : QuizTypes.Model -> Html
+view : QuizTypes.Model -> Html QuizTypes.Msg
 view model =
   div
     []

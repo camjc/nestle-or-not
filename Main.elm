@@ -1,13 +1,13 @@
-module Main (main) where
+module Main exposing (main)
 
 import QuizTypes
 import Quiz exposing (update, view)
 import Array
 import Html exposing (Html)
+import Html.App exposing (beginnerProgram)
 import Markdown
 import Random
-import Random.Array
-import StartApp.Simple exposing (start)
+-- import Random.Array
 
 
 -- True is Nestle, False is Other.
@@ -74,16 +74,17 @@ questions =
 
 shuffleListToArray : List ( Bool, String ) -> Array.Array QuizTypes.Question
 shuffleListToArray list =
-  fst
-    (Random.Array.shuffle
-      (Random.initialSeed 204862737)
-      (Array.fromList list)
-    )
+  (Array.fromList list)
+  -- fst
+  --   (Random.Array.shuffle
+  --     (Random.initialSeed 204862737)
+  --     (Array.fromList list)
+  --   )
 
 
-instructionsComponent : Html
+instructionsComponent : Html QuizTypes.Msg
 instructionsComponent =
-  Markdown.toHtml """
+  Markdown.toHtml [] """
 
 # Nestle or Not
 
@@ -101,21 +102,34 @@ instructionsComponent =
 
 """
 
-
-main : Signal Html
-main =
-  start
-    { model =
-        { questionId =
-            -1
-            -- Show Instructions
-        , questions = shuffleListToArray questions
-        , correctAnswers = Array.empty
-        , wrongAnswers = Array.empty
-        , buttonTrue = ( "Nestle", "#005a97" )
-        , buttonFalse = ( "Other", "#00975a" )
-        , instructionsComponent = instructionsComponent
-        }
-    , update = update
-    , view = view
+model =
+    { questionId =
+        -1
+        -- Show Instructions
+    , questions = shuffleListToArray questions
+    , correctAnswers = Array.empty
+    , wrongAnswers = Array.empty
+    , buttonTrue = ( "Nestle", "#005a97" )
+    , buttonFalse = ( "Other", "#00975a" )
+    , instructionsComponent = instructionsComponent
     }
+
+main =
+  Html.App.beginnerProgram { model = model, view = view, update = update }
+-- main =
+--   Html.App.beginnerProgram
+--     { model =
+--         { questionId =
+--             -1
+--             -- Show Instructions
+--         , questions = shuffleListToArray questions
+--         , correctAnswers = Array.empty
+--         , wrongAnswers = Array.empty
+--         , buttonTrue = ( "Nestle", "#005a97" )
+--         , buttonFalse = ( "Other", "#00975a" )
+--         , instructionsComponent = instructionsComponent
+--         }
+--     , update = update
+--     , view = view
+--     }
+--  -> Program Never

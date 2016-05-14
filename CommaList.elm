@@ -1,16 +1,15 @@
-module CommaList (view) where
+module CommaList exposing (view)
 
 import QuizTypes
 import Array
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (style)
 import String
-import String.Addons
-
+import StringReplace
 
 whitespaceToNbsp : String -> String
 whitespaceToNbsp string =
-  String.Addons.replace " " "\xA0" string
+  StringReplace.replace " " "\xA0" string
 
 
 getListString : QuizTypes.Answers -> String
@@ -22,7 +21,7 @@ getListString array =
     |> String.join ", "
 
 
-view : QuizTypes.Answers -> QuizTypes.ButtonTuple -> Html
+view : QuizTypes.Answers -> QuizTypes.ButtonTuple -> Html QuizTypes.Msg
 view listOfLabels buttonTuple =
   if Array.isEmpty listOfLabels then
     div [] []
