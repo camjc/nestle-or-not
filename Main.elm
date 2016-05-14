@@ -7,7 +7,6 @@ import Html exposing (Html)
 import Html.App exposing (beginnerProgram)
 import Markdown
 import Random
--- import Random.Array
 
 
 -- True is Nestle, False is Other.
@@ -75,6 +74,7 @@ questions =
 shuffleListToArray : List ( Bool, String ) -> Array.Array QuizTypes.Question
 shuffleListToArray list =
   (Array.fromList list)
+  -- Add back in once Random.Array is using Elm 0.17
   -- fst
   --   (Random.Array.shuffle
   --     (Random.initialSeed 204862737)
@@ -116,20 +116,3 @@ model =
 
 main =
   Html.App.beginnerProgram { model = model, view = view, update = update }
--- main =
---   Html.App.beginnerProgram
---     { model =
---         { questionId =
---             -1
---             -- Show Instructions
---         , questions = shuffleListToArray questions
---         , correctAnswers = Array.empty
---         , wrongAnswers = Array.empty
---         , buttonTrue = ( "Nestle", "#005a97" )
---         , buttonFalse = ( "Other", "#00975a" )
---         , instructionsComponent = instructionsComponent
---         }
---     , update = update
---     , view = view
---     }
---  -> Program Never
