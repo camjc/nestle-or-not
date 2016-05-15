@@ -1,12 +1,12 @@
 module Main exposing (main)
 
-import QuizTypes
-import Quiz exposing (update, view)
+import Quiz exposing (update, view, Question, Model)
 import Array
 import Html exposing (Html)
 import Html.App exposing (beginnerProgram)
 import Markdown
 import Random
+import Random.Array
 
 
 -- True is Nestle, False is Other.
@@ -14,77 +14,67 @@ import Random
 -- but just list the main competitor to each Nestle product.
 
 
-questions : List QuizTypes.Question
+questions : List Quiz.Question
 questions =
-  [ ( True, "Aero" )
-  , ( False, "Mars Bar" )
-  , ( True, "Allens" )
-  , ( False, "Cadbury" )
-  , ( True, "Uncle Tobys" )
-  , ( False, "Weet-Bix" )
-  , ( True, "Cheerios" )
-  , ( False, "Kellogg's Corn Flakes" )
-  , ( True, "Quick-eze" )
-  , ( False, "Rennie" )
-  , ( True, "Butter Menthols" )
-  , ( False, "Fisherman's Friend" )
-    -- , ( True, "Butterfinger" )
-    -- , ( False, "Clark Bar" )
-  , ( True, "Crunch" )
-  , ( False, "Krackel" )
-  , ( True, "Fancy Feast" )
-  , ( True, "Friskies" )
-  , ( False, "Whiskas" )
-  , ( False, "Purina" )
-  , ( True, "Gerber (Baby Formula)" )
-  , ( False, "Enfamil (Baby Formula)" )
-  , ( True, "Häagen-Dazs" )
-  , ( False, "Ben and Jerry" )
-    -- , ( True, "Hot Pockets" )
-    -- , ( False, "Pizza Rolls" )
-  , ( True, "Kit Kat" )
-  , ( False, "Snickers" )
-  , ( True, "Lean Cuisine" )
-  , ( False, "Weight Watchers" )
-  , ( True, "Maggi" )
-  , ( False, "Top Ramen" )
-  , ( True, "Milo" )
-  , ( False, "Moove" )
-  , ( True, "Mövenpick" )
-  , ( False, "Baskin Robbins" )
-  , ( True, "Nescafé" )
-  , ( False, "Starbucks" )
-  , ( True, "Nespresso" )
-  , ( False, "Illy" )
-  , ( True, "Nesquick" )
-  , ( False, "Ovaltine" )
-  , ( True, "Perrier" )
-  , ( False, "Evian" )
-  , ( True, "San Pellegrino" )
-  , ( False, "Cool Ridge" )
-  , ( True, "Smarties" )
-  , ( False, "M&Ms" )
-  , ( True, "Nerds" )
-  , ( False, "Skittles" )
-  , ( True, "Wonka" )
-  , ( False, "Hersheys" )
-  ]
+    [ ( True, "Aero" )
+    , ( False, "Mars Bar" )
+    , ( True, "Allens" )
+    , ( False, "Cadbury" )
+    , ( True, "Uncle Tobys" )
+    , ( False, "Weet-Bix" )
+    , ( True, "Cheerios" )
+    , ( False, "Kellogg's Corn Flakes" )
+    , ( True, "Quick-eze" )
+    , ( False, "Rennie" )
+    , ( True, "Butter Menthols" )
+    , ( False, "Fisherman's Friend" )
+    , ( True, "Crunch" )
+    , ( False, "Krackel" )
+    , ( True, "Fancy Feast" )
+    , ( True, "Friskies" )
+    , ( False, "Whiskas" )
+    , ( False, "Purina" )
+    , ( True, "Gerber (Baby Formula)" )
+    , ( False, "Enfamil (Baby Formula)" )
+    , ( True, "Häagen-Dazs" )
+    , ( False, "Ben and Jerry" )
+    , ( True, "Kit Kat" )
+    , ( False, "Snickers" )
+    , ( True, "Lean Cuisine" )
+    , ( False, "Weight Watchers" )
+    , ( True, "Maggi" )
+    , ( False, "Top Ramen" )
+    , ( True, "Milo" )
+    , ( False, "Moove" )
+    , ( True, "Mövenpick" )
+    , ( False, "Baskin Robbins" )
+    , ( True, "Nescafé" )
+    , ( False, "Starbucks" )
+    , ( True, "Nespresso" )
+    , ( False, "Illy" )
+    , ( True, "Nesquick" )
+    , ( False, "Ovaltine" )
+    , ( True, "Perrier" )
+    , ( False, "Evian" )
+    , ( True, "San Pellegrino" )
+    , ( False, "Cool Ridge" )
+    , ( True, "Smarties" )
+    , ( False, "M&Ms" )
+    , ( True, "Nerds" )
+    , ( False, "Skittles" )
+    , ( True, "Wonka" )
+    , ( False, "Hersheys" )
+    ]
 
 
-shuffleListToArray : List ( Bool, String ) -> Array.Array QuizTypes.Question
+shuffleListToArray : List ( Bool, String ) -> Array.Array Quiz.Question
 shuffleListToArray list =
-  (Array.fromList list)
-  -- Add back in once Random.Array is using Elm 0.17
-  -- fst
-  --   (Random.Array.shuffle
-  --     (Random.initialSeed 204862737)
-  --     (Array.fromList list)
-  --   )
+    fst (Random.step (Random.Array.shuffle (Array.fromList list)) (Random.initialSeed 204862737))
 
 
-instructionsComponent : Html QuizTypes.Msg
+instructionsComponent : Html a
 instructionsComponent =
-  Markdown.toHtml [] """
+    Markdown.toHtml [] """
 
 # Nestle or Not
 
@@ -102,6 +92,8 @@ instructionsComponent =
 
 """
 
+
+model : Quiz.Model
 model =
     { questionId =
         -1
@@ -114,5 +106,7 @@ model =
     , instructionsComponent = instructionsComponent
     }
 
+
+main : Program Never
 main =
-  Html.App.beginnerProgram { model = model, view = view, update = update }
+    Html.App.beginnerProgram { model = model, view = view, update = update }
