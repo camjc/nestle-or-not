@@ -4,7 +4,7 @@ Quiz Game written in Elm
 
 ## Play Online
 
-Not available yet.
+http://nestle-or-not.s3-website-us-east-1.amazonaws.com/
 
 ## Run Locally
 
@@ -31,3 +31,6 @@ to see it in action.
 
 This has no affiliation with Nestle or
 any of the other companies and products shown.
+
+I haven’t vetted the practices of all other examples yet,
+but just list the main competitor to each Nestle product.

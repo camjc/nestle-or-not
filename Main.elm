@@ -10,7 +10,7 @@ import Random.Array
 
 
 -- True is Nestle, False is Other.
--- I haven't vetted the practices of all other examples yet,
+-- I haven’t vetted the practices of all other examples yet,
 -- but just list the main competitor to each Nestle product.
 
 
