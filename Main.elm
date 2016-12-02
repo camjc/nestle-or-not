@@ -1,9 +1,8 @@
 module Main exposing (main)
 
-import Quiz exposing (update, view, Question, Model)
+import Quiz exposing (update, view, Question, Model, Msg)
 import Array
-import Html exposing (Html)
-import Html.App exposing (beginnerProgram)
+import Html exposing (Html, beginnerProgram)
 import Markdown
 import Random
 import Random.Array
@@ -69,7 +68,7 @@ questions =
 
 shuffleListToArray : List ( Bool, String ) -> Array.Array Quiz.Question
 shuffleListToArray list =
-    fst (Random.step (Random.Array.shuffle (Array.fromList list)) (Random.initialSeed 204862737))
+    Tuple.first (Random.step (Random.Array.shuffle (Array.fromList list)) (Random.initialSeed 204862737))
 
 
 instructionsComponent : Html a
@@ -107,6 +106,6 @@ model =
     }
 
 
-main : Program Never
+main : Program Never Model Msg
 main =
-    Html.App.beginnerProgram { model = model, view = view, update = update }
+    Html.beginnerProgram { model = model, view = view, update = update }
